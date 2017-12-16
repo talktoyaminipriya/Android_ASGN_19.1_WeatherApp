@@ -21,13 +21,15 @@ import java.util.Locale;
 public class Function {
 
     
-    
+    //url to get weather data
 
     private static final String OPEN_WEATHER_MAP_URL =
             "http://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&units=metric";
 
+    //API key
     private static final String OPEN_WEATHER_MAP_API = "54f0226df3d9295d48946bf93508ae93";
 
+    //intialization
     public static String setWeatherIcon(int actualId, long sunrise, long sunset){
         int id = actualId / 100;
         String icon = "";
@@ -95,6 +97,7 @@ public class Function {
         }
 
         @Override
+         //invoked on the UI thread after the background computation finishes
         protected void onPostExecute(JSONObject json) {
             try {
                 if(json != null){
@@ -104,22 +107,22 @@ public class Function {
 
 
                     String city = json.getString("name").toUpperCase(Locale.US) + "," +
-                            " " + json.getJSONObject("sys").getString("country");
-                    String description = details.getString("description").toUpperCase(Locale.US);
-                    String temperature = String.format("%.2f", main.getDouble("temp"))+ "°";
-                    String humidity = main.getString("humidity") + "%";
-                    String pressure = main.getString("pressure") + " hPa";
-                    String updatedOn = df.format(new Date(json.getLong("dt")*1000));
+                            " " + json.getJSONObject("sys").getString("country"); // country name
+                    String description = details.getString("description").toUpperCase(Locale.US); 
+                    String temperature = String.format("%.2f", main.getDouble("temp"))+ "°";// temperature
+                    String humidity = main.getString("humidity") + "%";// humidity
+                    String pressure = main.getString("pressure") + " hPa"; // pressure
+                    String updatedOn = df.format(new Date(json.getLong("dt")*1000)); //date
                     String iconText = setWeatherIcon(details.getInt("id"),
-                            json.getJSONObject("sys").getLong("sunrise") * 1000,
-                            json.getJSONObject("sys").getLong("sunset") * 1000);
+                            json.getJSONObject("sys").getLong("sunrise") * 1000, // sunrise value
+                            json.getJSONObject("sys").getLong("sunset") * 1000); // sunset value
 
                     delegate.processFinish(city, description, temperature, humidity, pressure, updatedOn,
                             iconText, ""+ (json.getJSONObject("sys").getLong("sunrise") * 1000));
 
                 }
             } catch (JSONException e) {
-                //Log.e(LOG_TAG, "Cannot process JSON results", e);
+               
             }
 
 
@@ -130,7 +133,7 @@ public class Function {
 
 
 
-
+// connection to get weather data from internet
 
     public static JSONObject getWeatherJSON(String lat, String lon){
         try {
