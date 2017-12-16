@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
 
-
+// fonts and icons to display in the text view
         weatherFont = Typeface.createFromAsset(getAssets(), "fonts/weathericons-regular-webfont.ttf");
 
         cityField = (TextView)findViewById(R.id.city_field);
@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        asyncTask.execute("12.950926", "77.584922"); //  asyncTask.execute("Latitude", "Longitude")
-
+        //  ("Latitude", "Longitude")
+        asyncTask.execute("12.950926", "77.584922"); 
 
 
     }
